@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soil Estate Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gidugu&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: rgb(17, 15, 15);
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding-left: 900px;
+        }
+        nav a {
+            color: rgb(248, 244, 244);
+            padding: 14px 20px;
+            text-decoration: none;
+            text-align: center;
+        }
+        nav a:hover {
+            background-color: #0c0c0c;
+            color: rgb(245, 238, 238);
+        }
+        .container {
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+        /* Style for the image container */
+        .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Space between the images */
+        }
+
+        /* Apply to both images to make their size consistent */
+        .image-container img {
+            width: 30%; /* Set both images to have 30% of the container's width */
+            height: auto; /* Maintain aspect ratio */
+            padding: 5px;
+            animation: blinkGreen 10s infinite; /* Apply the blinking animation */
+        }
+
+        /* Animation for blinking green color */
+        @keyframes blinkGreen {
+            0% { background-color: rgb(15, 15, 15); }
+            50% { background-color: transparent; }
+            100% { background-color: green; }
+        }
+          /* Flexbox container to align videos side by side */
+          .video-container {
+            display: flex;
+            justify-content: center; /* Aligns videos horizontally in the center */
+            gap: 20px; /* Optional: Adds space between videos */
+        }
+
+        /* Ensure videos have the same width */
+        .video-container video {
+            width: 50%; /* Both videos take up 50% of the width of the container */
+            height: auto; /* Maintain aspect ratio */
+        }
+         /* Container for the images */
+         .image-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Style for each image */
+        .image-container img {
+            width: 200px; /* Ensure all images are the same width */
+            height: auto;
+            cursor: pointer; /* Makes the image clickable */
+        }
+
+        /* Overlay Modal Styles */
+        .overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+            z-index: 9999; /* Ensure overlay is on top */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .overlay img {
+            max-width: 80%;
+            max-height: 80%;
+            object-fit: contain;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: rgb(173, 44, 44);
+            cursor: pointer;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+        }
+        .image-container {
+    display: flex;
+    gap: 20px; /* Space between images */
+}
+
+.image-item {
+    position: relative;
+    text-align: center;
+}
+
+.image-item img {
+    width: 200px; /* Set your preferred image size */
+    height: auto;
+}
+
+.text {
+    position: absolute;
+    bottom: 20px; /* Adjust to your liking */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(218, 213, 208); /* Optional background for readability */
+    color: blue;
+    padding: 2px;
+    font-size: 20px; /* Adjust font size */
+}
+.image-container {
+    display: flex;
+    gap: 20px; /* Space between images */
+}
+
+.image-item {
+    position: relative;
+    text-align: center;
+}
+
+.image-item img {
+    width: 400px; /* Set your preferred image size */
+    height: 200px;
+}
+
+.text {
+    position: absolute;
+    bottom: 30px; /* Adjust to your liking */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(248, 242, 242, 0.5); /* Optional background for readability */
+    color: rgb(10, 13, 233);
+    padding: 10px 15px; /* Padding to give space around text */
+    font-size: 25px; /* Adjust font size */
+    font-family: 'Gidugu', serif;
+    font-weight: 800; /* Bold text */
+    font-style: normal;
+    border-radius: 0px; /* Optional: rounded corners */
+}
+header {
+    font-family: 'Gidugu', serif; /* Use the Gidugu font */
+}
+
+h1 {
+    font-size: 60px; /* Adjust the font size for the header */
+    font-weight: 200; /* Optional: make the header bold */
+    padding:0pc; /* Add padding around the header */
+    margin: 0; /* Remove any default margin to control spacing */
+}
+
+p {
+    font-size: 20px; /* Adjust the font size for the paragraph */
+    padding: 0rem; /* Add padding around the paragraph */
+    margin: 0; /* Remove any default margin to control spacing */
+}
+/* Define the header's font */
+header {
+    font-family: 'Gidugu', serif;
+    animation: changeBackground 10s infinite; /* Apply animation */
+    text-align: center;
+    padding: 50px;
+}
+
+/* Define the header's font and apply animation */
+header {
+    font-family: 'Gidugu', serif;
+    animation: changeBackground 10s infinite; /* Apply the animation */
+    text-align: center;
+    padding: 0px; /* No padding around the header */
+}
+
+/* Keyframes for background color animation */
+@keyframes changeBackground {
+    0% {
+        background-color: #57e252; /* Coral */
+    }
+    25% {
+        background-color: #50e054; /* Green */
+    }
+    50% {
+        background-color: #74f568; /* Dodger Blue */
+    }
+    75% {
+        background-color: #37da37; /* Orange */
+    }
+    100% {
+        background-color: #41e941; /* Coral (back to start) */
+    }
+}
+
+/* Styling for header text */
+h1 {
+    font-size: 50px; /* Adjust font size for header */
+    font-weight: 200; /* Optional: make the header lighter */
+    margin: 0; /* Remove default margin */
+    padding: 0px; /* No padding inside the h1 */
+}
+
+p {
+    font-size: 20px; /* Adjust font size for paragraph */
+    margin: 0; /* Remove default margin */
+    padding: 0px; /* No padding inside the paragraph */
+}
+/* Define the container with animated background color and border */
+.section {
+    padding: 20px;
+    font-family: 'Gidugu', serif;
+    text-align: center;
+    border: 5px solid transparent; /* Initial transparent border */
+    border-radius: 10px; /* Optional: rounded corners */
+    animation: changeBackgroundAndBorder 10s infinite; /* Apply animation */
+}
+
+/* Keyframes for background color and border animation */
+@keyframes changeBackgroundAndBorder {
+    0% {
+        background-color: #0c0c0c; /* Coral */
+        border-color: #080808; /* Coral border */
+    }
+    25% {
+        background-color: #101110; /* Green */
+        border-color: #0d0e0d; /* Green border */
+    }
+    50% {
+        background-color: #0b0c0c; /* Dodger Blue */
+        border-color: #0b0c0c; /* Dodger Blue border */
+    }
+    75% {
+        background-color: #0c0c0b; /* Orange */
+        border-color: #080808; /* Orange border */
+    }
+    100% {
+        background-color: #131212; /* Coral */
+        border-color: #0f0f0f; /* Coral border (back to start) */
+    }
+}
+
+/* Styling for header text inside the section */
+h2 {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Styling for paragraph text inside the section */
+p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-top: 0;
+}
+/* Define the container with animated background color and border */
+.section {
+    padding: 20px;
+    font-family: 'Gidugu', serif;
+    text-align: center;
+    border: 5px solid transparent; /* Initial transparent border */
+    border-radius: 10px; /* Optional: rounded corners */
+    animation: changeBackgroundAndBorder 10s infinite; /* Apply animation */
+}
+
+/* Keyframes for background color and border animation */
+@keyframes changeBackgroundAndBorder {
+    0% {
+        background-color: #1a1919; /* Coral */
+        border-color: #202020; /* Coral border */
+    }
+    25% {
+        background-color: #282928; /* Green */
+        border-color: #232423; /* Green border */
+    }
+    50% {
+        background-color: #1b1b1b; /* Dodger Blue */
+        border-color: #171818; /* Dodger Blue border */
+    }
+    75% {
+        background-color: #1f1e1e; /* Orange */
+        border-color: #1b1b1b; /* Orange border */
+    }
+    100% {
+        background-color: #1b1b1b; /* Coral */
+        border-color: #181818; /* Coral border (back to start) */
+    }
+}
+
+/* Styling for header text inside the section */
+h2 {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: white; /* Change text color to white */
+}
+
+/* Styling for paragraph text inside the section */
+p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-top: 0;
+    color: white; /* Change text color to white */
+}
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+     
+    <header>
+        <h1> MRK ( Standards Pioneer In Contructions )</h1>
+        <p>Exploring Sustainable Land Management and Soil Health</p>
+    </header>
+     
+    <nav>
+        <a href="#about">About</a>
+        <a href="#soil-types">Soil Types</a>
+        <a href="#impact">Impact</a>
+        <a href="#contact">Contact</a>
+    </nav>
+
+          <img src="front image.webp" alt="image" class="img-width">
+
+    <div class="container">
+
+       <!-- About Section -->
+<section id="about" class="section">
+    <h2>About the Project</h2>
+    <p  style="font-size: 25px;">The Soil Estate Project focuses on sustainable land management practices that promote healthy soil, enhance biodiversity, and increase agricultural productivity. Our goal is to create awareness about soil health, improve soil quality, and reduce environmental degradation.
+        1. Sand making
+
+In crushed aggregates production, up to 30% (rock dependent) of materials acquired from the bedrock are reduced to sizes smaller than 4 mm, meaning they end up as waste. These stockpiles are a perfect feed for the production of manufactured sand.
+
+2. Crushing and screening
+
+Efficient crushing and screening shape the feed material to uniform consistency, precise form and gradation.
+
+3. Air classification
+
+Dry classification reduces the amount of dust and superfines, which helps to meet strict specifications and improve end product quality.
+
+4. Sand
+
+The final end product is manufactured sand that is superior in quality to natural sand, giving great r 
+Your unused or rejected aggregate materials can be turned into profitable product with the help of reliable and robust technologies.
+
+Metso offers complete crushing and separation solutions for greenfield sites as well as solutions that can be incorporated into existing plants.
+
+Depending on your requirements, there are several alternatives for sand manufacturing, all designed to produce well graded, high-quality end product.
+
+    </p>
+    <ul>
+  
+    <img src="about image lorry pictuer.avif">
+    <img  src="about lorry image 2.avif">
+
+    </ul>
+</section>
+
+
+        <!-- Soil Types Section -->
+        <section id="soil-types" class="section">
+            <h2>Types  of Soil</h2>
+            <p style="font-size: 25px;">Soil is categorized into different types based on its texture, structure, and composition. Here are some of the common soil types:: Manal family-controlled Himalaya Drug Company, India’s largest research-based herbal company, is unveiling sweeping changes in its corporate structure. The closely held Rs 1,000-crore business will have a new flagship entity, after its chairman Meraj Manal bought out his four long running partners in the original Indian entity, which remained a partnership firm till recently.
+
+                Himalaya with five leading pharma brands such as Liv 52, Bonnisan, Pilex, Cystone and Septilin is reckoned to be one of the most valuable family run assets in the country with investors and sector analysts tracking the corporate restructuring. Its revenue has soared to Rs 900-1,000 crore from around Rs 250 crore in 2001.
+                
+                The new holding company in Cayman Islands, Himalaya Global Holdings (HGH), will control its worldwide operations including India through four fully owned subsidiaries located in Houston, Dubai, Singapore and Bangalore. The heads of these subsidiaries will report into the three member board of HGH, which effectively becomes the executive council overseeing global operations.
+                </p>
+          
+            <div style="font-family: 'Gidugu', serif; font-weight: 800; font-style: normal;" class="image-container">
+                <a href="https://youtube.com/shorts/elJW60M6ahM?si=x9srqAYR7sZKijYk" class="image-item">
+                    <img src="soil 1.jpg" alt="Soil Image">
+                    <div class="text">M-Sand</div>
+                </a>
+                <a href="https://youtube.com/shorts/ahoHb5TkXGc?si=4Fo5xsH4bvB9ycvz" class="image-item">
+                    <img src="river-sand.gif" alt="River Sand Image">
+                    <div class="text">River Soil</div>
+                </a>
+            </div>
+            
+            
+            
+              <div class="video-container">
+                  <video autoplay muted loop src="front video.mp4"></video>
+                  <video autoplay muted loop src="front 2 video.webm"></video>
+              </div>
+          
+            <ul style="color: white;list-style: none;font-size: 25px;"> 
+                <li ><strong>Loamy Soil : </strong> Best for farming, as it retains moisture and nutrients effectively.</li>
+                <li><strong>Sandy Soil : </strong> Drains well but doesn't hold nutrients effectively.</li>
+                <li><strong>Clay Soil : </strong> Heavy and sticky, holds nutrients but often drains poorly.</li>
+                <li><strong>Silty Soil : </strong> Smooth and fertile, but can become compacted easily.</li>
+            </ul>
+        </section>
+
+        <!-- Impact Section -->
+        <section id="impact" class="section">
+            <h2>Weight Mechine</h2>
+            <p>Through research and hands-on projects, we aim to restore degraded lands, improve soil fertility, and promote sustainable agricultural practices. Our impact is seen in:</p>
+            <ul>
+               <!-- Image Container -->
+        <div class="image-container">
+              <img src="weight mechine 1.jpg" alt="Machine 1" onclick="openOverlay(this.src)">
+              <img src="weight mechine2.jpg" alt="Machine 2" onclick="openOverlay(this.src)">
+        </div >
+                <li>Improved agricultural yield</li>
+                <li>Enhanced soil biodiversity</li>
+                <li>Reduced erosion and runoff</li>
+                <li>Community education on sustainable practices</li>
+            </ul>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2>Contact Us</h2>
+            <p>If you're interested in learning more about the Soil Estate Project, feel free to get in touch:</p>
+            <p>Email: <a href="@soiletateproject.org">@MRKsoilcontructions.com</a></p>
+            <p>Phone: 9488334799</p>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Soil Estate Project. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

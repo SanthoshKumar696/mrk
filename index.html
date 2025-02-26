@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sand Info for Concrete Works</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <style>
+     /* Global Styles */
+     body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    .navbar {
+      background: white;
+      padding: 15px;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      box-shadow: none;
+    }
+    .navbar .nav-link {
+      color: rgb(31, 30, 30) !important;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    /* Navbar link hover effect */
+    .navbar .nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      color: hsl(236, 85%, 51%) !important;
+    }
+    .navbar .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      color: #1d1aec !important;
+    }
+    .dropdown-menu a {
+      color: black !important;
+    }
+    /* Carousel Styles */
+    #sandCarousel {
+      width: 100%;
+      margin-top: 110px;
+      padding: 0;
+    }
+    .carousel-item img {
+      height: 600px;
+      object-fit: cover;
+      width: 100%;
+    }
+    /* Carousel image hover effect */
+    #sandCarousel .carousel-item img:hover {
+      transform: none !important;
+      filter: none !important;
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 40px 20px;
+      border-bottom: 1px solid #ddd;
+    }
+    .section h2 {
+      margin-bottom: 20px;
+    }
+    /* Image Hover Effects */
+    .section img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .section img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    /* Modal Styles */
+    .image-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90vh;
+      object-fit: contain;
+      animation: zoomIn 0.3s ease-out;
+    }
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 35px;
+      color: #f1f1f1;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    /* Container styling */
+    .sand-container {
+      position: relative;
+      border: 2px solid #4bec1a;
+      padding: 20px;
+      margin: 20px 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .sand-label {
+      position: absolute;
+      font-size: 20px;
+      top: -12px;
+      left: 20px;
+      background-color: white;
+      padding: 0 10px;
+      font-weight: bold;
+    }
+    /* Option Box Styling */
+    .option-box {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 10px;
+      background-color: #f9f9f9;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .option-box:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 8px rgba(226, 8, 8, 0.15);
+    }
+    /* Image Grid Spacing */
+    .img-grid .col-md-4 {
+      margin-bottom: 15px;
+    }
+    /* Global Image Hover Effect */
+    img {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    /* Contact Section Styling */
+    #contact {
+      background-image: url('contact.jpg');
+      padding: 60px 0;
+    }
+
+    #contact h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 2.5em;
+      color: #333;
+    }
+
+    #contact form {
+      background: rgb(243, 190, 91);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    #contact .form-control {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+    }
+
+    #contact .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    #contact .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #004085;
+    }
+
+    .map-responsive {
+      overflow: hidden;
+      padding-bottom: 56.25%;
+      position: relative;
+      height: 0;
+    }
+
+    .map-responsive iframe {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      border: 0;
+      border-radius: 10px;
+    }
+
+    /* Vertical divider for larger screens */
+    .vertical-divider {
+      border-right: 0.5px solid #0e0d0d;
+      padding-right: 30px;
+    }
+
+    /* For small screens, switch to a horizontal divider */
+    @media (max-width: 767.98px) {
+      .vertical-divider {
+        border-right: none;
+        border-bottom: 3px solid #d6c5c1;
+        padding-right: 0;
+        padding-bottom: 30px;
+      }
+    }
+
+    #WhiteSandDetails {
+      margin-top: 10px;
+      background-color: #f3ef11;
+      padding: 15px;
+      border-radius: 10px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .product-card {
+      flex: 1 1 calc(12.5% - 10px);
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      height: 300px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .product-card:hover {
+      transform: scale(1.05);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .product-card p {
+      font-size: 14px;
+      margin-top: 5px;
+      font-weight: bold;
+      background-color: transparent;
+    }
+
+    .additional-info {
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .card-container {
+      margin-top: 5px;
+      background-color: yellow;
+    }
+
+    .weight-bridge-card {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .card {
+      background-color: white;
+      width: 30%;
+      padding: 10px;
+      margin-top: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    h1 {
+      background-color: transparent;
+      text-align: center;
+      font-size: 36px;
+    }
+
+    p {
+      text-align: center;
+      font-size: 18px;
+      color: #333;
+      background-color: transparent;
+    }
+
+    @keyframes blink {
+      0% { color: red; }
+      25% { color: blue; }
+      50% { color: green; }
+      75% { color: orange; }
+      100% { color: purple; }
+    }
+
+    .blinking {
+      animation: blink 2s infinite;
+    }
+
+    .about-section, .delivery-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      background-color: white !important;
+      align-items: left;
+      overflow: hidden;
+      color: white;
+    }
+
+    .background-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: translate(-50%, -50%);
+      z-index: 0;
+    }
+
+    .about-content, .delivery-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      padding: 50px;
+      background-color: none;
+      border-radius: 8px;
+    }
+
+    .about-heading {
+      margin-top: 5px;
+      padding-top: 30px;
+      color: white;
+      font-size: 30px;
+      width: 300px;
+      background-color: none;
+    }
+
+    .about-paragraph {
+      font-size: 20px;
+      color: white;
+      width: 700px;
+      background-color: none;
+    }
+
+    .delivery-heading {
+      color: white;
+      background-color: none;
+    }
+
+    .delivery-paragraph {
+      color: white;
+      font-size: 18px;
+      background-color: none;
+    }
+
+    .delivery-key-points {
+      color: white;
+      font-size: 18px;
+      background-color: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <img src="mrknew.png" alt="Logo" style="height: 80px;">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon bg-warning" ></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="sandDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Products
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="sandDropdown">
+              <li><a class="dropdown-item" href="whitesand.html">Rough sand</a></li>
+              <li><a class="dropdown-item" href="whitesand.html">Medium sand</a></li>
+              <li><a class="dropdown-item" href="whitesand.html">Nice sand</a></li>
+              <li><a class="dropdown-item" href="blackmsand.html">Rough M-sand</a></li>
+              <li><a class="dropdown-item" href="blackmsand.html">P-sand</a></li>
+              <li><a class="dropdown-item" href="fillingsand.html">Gravel sand</a></li>
+              <li><a class="dropdown-item" href="fillingsand.html">Red soil sand</a></li>
+              <li><a class="dropdown-item" href="jalli.html">Jalli</a></li>
+              <li><a class="dropdown-item" href="pvcdoors.html">PVC Doors</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#delivery">Delivery</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Modal for Image Preview -->
+  <div class="image-modal" id="imageModal">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="modalImage" alt="Preview">
+  </div>
+
+  <!-- Carousel -->
+  <div id="sandCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000" data-bs-pause="false">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="mrkimg.JPG" class="d-block w-100" alt="Sand Image 1">
+      </div>
+      <div class="carousel-item">
+        <img src="carusol3.JPG" class="d-block w-100" alt="Sand Image 2">
+      </div>
+      <div class="carousel-item">
+        <img src="coursel2.JPG" class="d-block w-100" alt="Sand Image 3">
+      </div>
+      <!--
+      <div class="carousel-item">
+        <img src="coursel2.JPG" class="d-block w-100" alt="Sand Image 3">
+      </div>
+      <div class="carousel-item">
+        <img src="coursel2.JPG" class="d-block w-100" alt="Sand Image 3">
+      </div>
+      <div class="carousel-item">
+        <img src="coursel2.JPG" class="d-block w-100" alt="Sand Image 3">
+      </div>
+      <div class="carousel-item">
+        <img src="coursel2.JPG" class="d-block w-100" alt="Sand Image 3">
+      </div>
+      
+      
+      -->
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#sandCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#sandCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <!-- Content Sections -->
+  <!-- <div id="Delivery">
+    <div class="delivery-content">
+      <h2>Free Worldwide Delivery</h2>
+      <p>We deliver free all over the world! Explore our global network below.</p>
+    </div>
+    <div id="map"></div>
+  </div> -->
+  
+  <div id="WhiteSandDetails">
+    <h2 style="color: rgb(15, 1, 1); font-size: 18px; margin-bottom: 10px;">Products Available</h2>
+    <div class="product-list">
+        <div class="product-card">
+          <a href="whitesand.html"><img src="normalsand.JPG" alt="sand"></a>
+            <p>White sand</p>
+        </div>
+        <div class="product-card">
+          <a href="blackmsand.html"><img src="msand.JPG" alt="Jalli"></a>
+            <p>Black M-sand</p>
+        </div>
+        <div class="product-card">
+          <a href="fillingsand.html"><img src="fillingsand.jpg" alt="Sand"></a>
+            <p>Filling Sand</p>
+        </div>
+        <div class="product-card">
+          <a href="jalli.html"><img src="jalli.webp" alt="Blocks"></a>
+            <p>Jalli</p>
+        </div>
+        <div class="product-card">
+          <a href="pvcdoors.html"><img src="pvcdoor.webp" alt="pvcdoor"></a>
+            <p>Pvc Doors</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="card-container">
+  
+  <h1 style="align-self: center; padding-top: 20px;">
+    <span class="blinking">Available</span> - Wayment Bridge
+  </h1> 
+  <div class="weight-bridge-card">
+    <div class="card">
+      <img src="weightmachine1.JPG" alt="Image 1" style="min-height: 300px;">
+    </div>
+    <div class="card">
+      <img src="weightmachine2.JPG" alt="Image 2" style="min-height: 300px;">
+    </div>
+    <div class="card">
+      <img src="wightmachine3.JPG" alt="Image 3" style="min-height: 300px;">
+    </div>
+  </div>
+  <p class="pb-3 ps-3 pe-3">A weighbridge is used to weigh entire rail or road vehicles and their contents. The load carried by the vehicle is calculated by weighing the vehicle both empty and loaded.
+In addition to the regular weighbridge services, a Wayment Bridge is also available. This specialized bridge provides enhanced accuracy and efficiency for weighing vehicles, ensuring precise measurements and reducing the time required for weighing. It is ideal for busy logistics operations and heavy-duty vehicle assessments.</p>
+
+</div>
+
+
+ <!-- About Us Section -->
+ <section id="about" class="about-section mt-1 " style="text-align: left;">
+  <video autoplay muted loop playsinline class="background-video">
+    <source src="intro2.MP4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  
+    <div class="about-content">
+      <h1 class="about-heading">About MRK Civil Supply: Best Building and Construction Materials Supplier </h1>
+      <p class="about-paragraph">
+        Welcome to MRK Civil Supply, Your Best Supplier for all construction materials needs. with a commitment to quality and competitive pricing, we provide a comprehensive range of Retail and Wholesale building materials sourced directly from manufacturers. From cement to M sand, steel bars to aggregates, we've got you covered. Whether you're a builder, contractor, developer, or homeowner, MRK Civil Supply is here to make your construction projects a success. Contact us today for expert guidance and unbeatable prices</p>
+    </div>
+ 
+</section>
+
+
+<!-- Delivery Us Section -->
+<section id="delivery" class="delivery-section mt-3">
+  <video autoplay muted loop playsinline class="background-video" style="filter: brightness(70%);">
+    <source src="lorry_delivery_video1.MP4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <div class="delivery-content">
+    
+        <h1  class="delivery-heading">🚚 Fast and Reliable Delivery Services</h1>
+        <P class="delivery-paragraph">At MRK Civil Supply, we understand that timely delivery of construction materials is crucial for the success of your projects. That’s why we offer fast, reliable, and flexible delivery services to ensure your materials arrive when and where you need them.</P>
+      <h2  class="delivery-heading">Why Choose Our Delivery Service?</h2>
+      <ul class="delivery-key-points">
+      <li><b>Wide Coverage:</b> We deliver to both urban and remote project sites.</li>
+      <li><b>Prompt Service: </b>On-time delivery to keep your construction schedule on track.</li>
+      <li><b>Variety of Materials: </b>From cement, M sand, and steel bars to aggregates — all delivered to your doorstep</li>
+      <li><b>Flexible Scheduling: </b>Choose a delivery time that works best for you</li>
+      <li><b>Safe Handling: </b>Materials are transported with care, ensuring quality upon arrival.</li></ul>
+   </div>
+</section>
+
+
+
+  <!-- Contact Us Section -->
+  <section id="contact" class="section" style="margin-top: 20px;">
+    <div class="container">
+      <h2>Contact Us</h2>
+      <div class="row">
+        <!-- Left Column: Contact Form with Vertical Divider -->
+        <div class="col-md-5 vertical-divider">
+          <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+            <div class="mb-3">
+                <input type="hidden" name="access_key" value="3d09799e-7026-4547-8be2-aa25c019544b">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Your Name" required>
+                <div class="invalid-feedback">Please enter your name.</div>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Your Email" required>
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+            </div>
+            <div class="mb-3">
+              <label for="product" class="form-label">Product</label>
+              <select class="form-control" id="product" name="product" required>
+                  <option value="" disabled selected>Select a product</option>
+                  <option value="Rough sand">Rough sand</option>
+                  <option value="Medium sand">Medium sand</option>
+                  <option value="Nice sand">Nice sand</option>
+                  <option value="Rough M-sand">Rough M-sand</option>
+                  <option value="P-sand">P-sand</option>
+                  <option value="Gravel sand">Gravel sand</option>
+                  <option value="Red soil">Red soil</option>
+                  <option value="Jalli">Jalli</option>
+                  <option value="PVC Doors">PVC Doors</option>
+                  <!-- Add more options as needed -->
+              </select>
+              <div class="invalid-feedback">Please select a product.</div>
+          </div>
+          
+            <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+                <div class="invalid-feedback">Please enter your message.</div>
+            </div>
+            <!-- Hidden fields for FormSubmit -->
+            <button type="submit" class="btn btn-primary w-100">Send Message</button>
+        </form>
+        
+      
+          
+        </div>
+        <!-- Right Column: Additional Information & Map -->
+        <div class="col-md-5" style="margin-left: 60px; font-size: 16px;">
+          <div class="additional-info">
+            <h3>Our Contact Details</h3>
+            <p>
+              Feel free to reach out to us for any queries or further information.
+              <br>
+              <strong>Phone:</strong>0416 2254799<br>
+              <strong>MOBILE:</strong>98947 55162,
+                       94883 34799<br>
+              <strong>Email:</strong> info@example.com<br>
+              <strong>Address:</strong>  SF.NO:207/1A1A, NH48 Bangalore Highway Road, Arappakkam Village,Ranipet District,Tamilnadu-632 517.
+            </p>
+            <!-- Map Embed -->
+            <div class="map-responsive mt-4">
+              <a href="https://www.google.com/maps?q=12.947139,79.215611" target="_blank">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15544.123456789012!2d79.215611!3d12.947139!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDU2JzQ5LjciTiA3OcKwMTInNTYuMiJF!5e0!3m2!1sen!2sus!4v1698765432100"
+                  width="800"
+                  height="350"
+                  style="border:0;"
+                  allowfullscreen=""
+                  loading="lazy">
+                </iframe>
+              </a>
+            </div>              
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Scripts -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Get all navigation links
+      const navLinks = document.querySelectorAll('.navbar .nav-link');
+      
+      // Define sections to track for scrolling
+      const sections = [
+        { id: "sandCarousel", link: document.querySelector('.nav-link[href="#"]') },
+        { id: "delivery", link: document.querySelector('.nav-link[href="#delivery"]') },
+        { id: "about", link: document.querySelector('.nav-link[href="#about"]') },
+        { id: "contact", link: document.querySelector('.nav-link[href="#contact"]') },
+      ];
+  
+      // Function to update active navigation link based on scroll position
+      function updateActiveNav() {
+        let scrollPosition = window.scrollY;
+        
+        // Set Home as active when at the top of the page
+        if (scrollPosition < 200) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          document.querySelector('.nav-link[href="#"]').classList.add('active');
+          return;
+        }
+        
+        // Check other sections
+        for (let i = 0; i < sections.length; i++) {
+          const section = document.getElementById(sections[i].id);
+          if (section) {
+            const sectionTop = section.offsetTop - 150;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+              navLinks.forEach(link => link.classList.remove('active'));
+              sections[i].link.classList.add('active');
+              break;
+            }
+          }
+        }
+      }
+  
+      // Add click event listeners to navbar links
+      navLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Smooth scroll to the section (if it's not the home link with dropdown)
+          const href = this.getAttribute('href');
+          if (href !== '#' && !this.classList.contains('dropdown-toggle')) {
+            e.preventDefault();
+            const targetSection = document.querySelector(href);
+            if (targetSection) {
+              window.scrollTo({
+                top: targetSection.offsetTop - 100,
+                behavior: 'smooth'
+              });
+            }
+          }
+        });
+      });
+  
+      // Make Home active by default when page loads
+      document.querySelector('.nav-link[href="#"]').classList.add('active');
+      
+      // Listen for scroll events
+      window.addEventListener("scroll", updateActiveNav);
+      updateActiveNav();
+  
+      // Contact Form Validation and Submission
+      const form = document.getElementById('contactForm');
+      form.addEventListener('submit', function (e) {
+        if (!this.checkValidity()) {
+          e.preventDefault();
+          e.stopPropagation();
+          this.classList.add('was-validated');
+        } else {
+          // If form is valid (default submission to FormSubmit will proceed)
+          // Since you're using web3forms, we'll add some additional logic
+          
+          // You can show a confirmation message here if desired
+          alert('Thank you for contacting us! We will get back to you soon.');
+          
+          // Clear the form after successful submission
+          // We use setTimeout to allow the form submission to complete first
+          setTimeout(() => {
+            form.reset();
+            form.classList.remove('was-validated');
+          }, 100);
+        }
+      });
+  
+      // Modal Image Script
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("modalImage");
+      const closeModal = document.querySelector(".close-modal");
+  
+      document.querySelectorAll('.section img').forEach(img => {
+        img.addEventListener('click', function () {
+          modal.style.display = "flex";
+          modalImg.src = this.src;
+        });
+      });
+  
+      closeModal.addEventListener('click', function () {
+        modal.style.display = "none";
+      });
+  
+      // Close modal when clicking outside the image
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+  
+      // Close modal with escape key
+      document.addEventListener('keydown', function (e) {
+        if (e.key === "Escape" && modal.style.display === "flex") {
+          modal.style.display = "none";
+        }
+      });
+    });
+  </script>
+</body>
+</html>

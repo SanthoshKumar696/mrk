@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sand Info for Concrete Works</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin-top: 80px; /* Space for fixed navbar */
+    }
+    .navbar {
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .navbar .nav-link {
+      color: #1f1e1e !important;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .navbar .nav-link:hover {
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 5px;
+      color: #1a28ec !important;
+    }
+    .navbar .nav-link.active {
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 5px;
+      color: hsl(236, 85%, 51%) !important;
+    }
+    .white-sand-info {
+      background-color: #f3ef11;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+    }
+    .product-card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.3s ease-in-out;
+      margin-bottom: 20px;
+    }
+    .product-card:hover {
+      transform: scale(1.05);
+    }
+    .product-card img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+    .product-card p {
+      font-size: 14px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .product-card ul {
+      text-align: left;
+      padding-left: 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="mrknew.png" alt="Logo" style="height: 60px;">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="mrk.html">Home</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="sandDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
+            <ul class="dropdown-menu" aria-labelledby="sandDropdown">
+              <li><a class="dropdown-item" href="blackmsand.html">Rough M-sand</a></li>
+              <li><a class="dropdown-item" href="blackmsand.html">P-sand</a></li>
+              <li><a class="dropdown-item" href="fillingsand.html">Gravel sand</a></li>
+              <li><a class="dropdown-item" href="fillingsand.html">Red soil sand</a></li>
+              <li><a class="dropdown-item" href="jalli.html">Jalli</a></li>
+              <li><a class="dropdown-item" href="pvcdoors.html">PVC Doors</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="#Delivery">Delivery</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">About us</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content wrapped in a flex container -->
+  <div class="container-fluid d-flex flex-column" style="min-height: 100vh;">
+    <!-- Back Button -->
+    <div class="mt-5 pt-3">
+      <button class="btn btn-primary" onclick="history.back()">Back</button>
+    </div>
+
+    <!-- White Sand Info Card -->
+    <h1 class="text-center mb-4">White Sand</h1>
+    <div class="card mb-4">
+      <div class="card-body" style="font-size: 18px;">
+        <p>White sand is a stable and corrosion-resistant material often mixed with concrete to enhance both its aesthetic appeal and structural integrity. Its bright, attractive appearance gives floors and walls a clean, polished look, while its heat and corrosion-resistant properties improve the overall strength and durability of the structure. This makes it an ideal addition in construction, offering not only visual appeal but also long-lasting performance in various building applications.
+            </p>
+      </div>
+    </div>
+
+    <!-- White Sand Details with Flex Grow -->
+    <div id="WhiteSandDetails" class="white-sand-info flex-grow-1">
+      <div class="row">
+        <!-- Rough Sand -->
+        <div class="col-sm-6 col-md-4 col-lg-4 d-flex">
+          <div class="product-card d-flex flex-column h-100">
+            <a href="whitesand.html">
+              <img src="roughsand.webp" alt="Rough Sand" />
+            </a>
+            <p>Rough Sand</p>
+            <div class="mt-auto">
+              <p>
+                Rough sand features coarse, angular particles that improve the bond with cement, making it ideal for construction applications where strength is a priority. The angular texture of the particles creates a stronger connection between the sand and cement, contributing to a more durable mix. However, because of its coarse nature, rough sand requires careful water management to ensure proper consistency and workability of the concrete, preventing issues with mixing or curing.
+              </p>
+              <ul class="list-unstyled">
+                <li><strong>Angular Particles:</strong> Boost bonding with cement.</li>
+                <li><strong>High Surface Area:</strong> Needs extra cement paste.</li>
+                <li><strong>Water Absorption:</strong> Affects mix workability.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Medium Sand -->
+        <div class="col-sm-6 col-md-4 col-lg-4 d-flex">
+          <div class="product-card d-flex flex-column h-100">
+            <img src="mediumsand.jpg" alt="Medium Sand" />
+            <p>Medium Sand</p>
+            <div class="mt-auto">
+              <p>
+                Medium sand features a more controlled particle size compared to rough sand, making it ideal for improving the workability of concrete. Its uniform texture allows for easier mixing, leading to smoother, more manageable concrete that can be applied efficiently. While still providing strong bonding with cement, medium sand offers a balanced blend of durability and ease of use, making it a versatile choice for a range of construction projects.
+              </p>
+              <ul class="list-unstyled">
+                <li><strong>Angular Particles:</strong> Enhance bonding.</li>
+                <li><strong>Consistent Texture:</strong> Improves workability.</li>
+                <li><strong>Optimized Water Demand:</strong> Reduces excess water usage.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Nice Sand -->
+        <div class="col-sm-6 col-md-4 col-lg-4 d-flex">
+          <div class="product-card d-flex flex-column h-100">
+            <img src="nicesand.webp" alt="Nice Sand" />
+            <p>Nice Sand</p>
+            <div class="mt-auto">
+              <p>
+                Nice sand combines aesthetic appeal with strength, making it a versatile material for both decorative and structural applications. Its smooth texture and uniform particle size not only enhance the visual quality of surfaces but also ensure strong bonding in concrete mixes. This makes it ideal for projects that require both beauty and durability, such as decorative flooring, plastering, or any structure where a polished finish is desired without compromising strength.
+              </p>
+              <ul class="list-unstyled">
+                <li><strong>Attractive Appearance:</strong> Enhances visual appeal.</li>
+                <li><strong>Strength Enhancement:</strong> Improves durability.</li>
+                <li><strong>Versatile Use:</strong> Ideal for multiple applications.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
